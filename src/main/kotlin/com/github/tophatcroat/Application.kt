@@ -1,9 +1,12 @@
 package com.github.tophatcroat
 
 import appModule
+import com.apurebase.kgraphql.GraphQL
 import com.github.tophatcroat.config.setupConfig
 import com.github.tophatcroat.data.DatabaseConnectionFactory
 import com.github.tophatcroat.feature.todo.controller.todoController
+import com.github.tophatcroat.feature.todo.controller.todoQlController
+import com.github.tophatcroat.feature.todo.data.dao.TodoTable
 import com.github.tophatcroat.plugins.configureRouting
 import com.github.tophatcroat.plugins.configureSecurity
 import io.ktor.application.*
@@ -19,6 +22,8 @@ import io.ktor.routing.routing
 import io.ktor.serialization.json
 import io.ktor.util.DataConversionException
 import java.util.UUID
+import org.jetbrains.exposed.sql.SchemaUtils
+import org.jetbrains.exposed.sql.transactions.transaction
 import org.koin.ktor.ext.Koin
 import org.koin.logger.slf4jLogger
 import org.koin.core.module.Module
@@ -40,6 +45,12 @@ fun Application.module(koinModules: List<Module> = listOf(appModule)) {
 
     val databaseConnectionFactory by inject<DatabaseConnectionFactory>()
     databaseConnectionFactory.connect()
+
+
+    // TODO: add flyway
+    transaction {
+        SchemaUtils.create(TodoTable)
+    }
 
     // configure serialization
     install(ContentNegotiation) {
@@ -88,4 +99,12 @@ fun Application.module(koinModules: List<Module> = listOf(appModule)) {
     routing {
         todoController()
     }
+
+    install(GraphQL) {
+        playground = true
+        schema {
+            todoQlController()
+        }
+    }
 }
+

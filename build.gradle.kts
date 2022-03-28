@@ -10,6 +10,7 @@ val junit_version: String by project
 val test_containers_version: String by project
 val mockk_version: String by project
 val strikt_version: String by project
+val kgraphql_version: String by project
 
 plugins {
     application
@@ -58,6 +59,9 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
     testImplementation("io.mockk:mockk:$mockk_version")
     testImplementation("io.strikt:strikt-core:$strikt_version")
+
+    implementation("com.apurebase:kgraphql:$kgraphql_version")
+    implementation("com.apurebase:kgraphql-ktor:$kgraphql_version")
 
     testImplementation("io.insert-koin:koin-test:$koin_version")
     testImplementation("io.insert-koin:koin-test-junit5:$koin_version")
