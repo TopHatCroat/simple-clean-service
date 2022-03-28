@@ -1,15 +1,15 @@
 package com.github.tophatcroat
 
-import appModule
 import com.apurebase.kgraphql.GraphQL
 import com.github.tophatcroat.config.setupConfig
 import com.github.tophatcroat.data.DatabaseConnectionFactory
+import com.github.tophatcroat.di.appModule
 import com.github.tophatcroat.feature.todo.controller.todoController
 import com.github.tophatcroat.feature.todo.controller.todoQlController
 import com.github.tophatcroat.feature.todo.data.dao.TodoTable
-import com.github.tophatcroat.plugins.configureRouting
 import com.github.tophatcroat.plugins.configureSecurity
-import io.ktor.application.*
+import io.ktor.application.Application
+import io.ktor.application.install
 import io.ktor.features.CORS
 import io.ktor.features.CallLogging
 import io.ktor.features.ContentNegotiation
@@ -17,23 +17,24 @@ import io.ktor.features.DataConversion
 import io.ktor.features.DefaultHeaders
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpMethod
+import io.ktor.locations.Locations
 import io.ktor.request.path
 import io.ktor.routing.routing
 import io.ktor.serialization.json
 import io.ktor.util.DataConversionException
-import java.util.UUID
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
-import org.koin.ktor.ext.Koin
-import org.koin.logger.slf4jLogger
 import org.koin.core.module.Module
+import org.koin.ktor.ext.Koin
 import org.koin.ktor.ext.inject
+import org.koin.logger.slf4jLogger
 import org.slf4j.event.Level
+import java.util.UUID
 
 fun main(args: Array<String>): Unit =
     io.ktor.server.netty.EngineMain.main(args)
 
-@Suppress("unused") // application.conf references the main function. This annotation prevents the IDE from marking it as unused.
+@Suppress("unused") // application.conf references the main function
 fun Application.module(koinModules: List<Module> = listOf(appModule)) {
 
     install(Koin) {
@@ -46,7 +47,6 @@ fun Application.module(koinModules: List<Module> = listOf(appModule)) {
     val databaseConnectionFactory by inject<DatabaseConnectionFactory>()
     databaseConnectionFactory.connect()
 
-
     // TODO: add flyway
     transaction {
         SchemaUtils.create(TodoTable)
@@ -56,6 +56,8 @@ fun Application.module(koinModules: List<Module> = listOf(appModule)) {
     install(ContentNegotiation) {
         json()
     }
+
+    install(Locations)
 
     install(DataConversion) {
         convert<UUID> {
@@ -94,8 +96,6 @@ fun Application.module(koinModules: List<Module> = listOf(appModule)) {
 
     configureSecurity()
 
-    configureRouting()
-
     routing {
         todoController()
     }
@@ -107,4 +107,3 @@ fun Application.module(koinModules: List<Module> = listOf(appModule)) {
         }
     }
 }
-

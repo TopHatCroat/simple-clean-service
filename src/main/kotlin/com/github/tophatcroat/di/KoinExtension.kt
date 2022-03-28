@@ -38,7 +38,7 @@ inline fun <reified T : Any> SchemaBuilder.get(
  * Retrieve given property for KoinComponent
  * @param key - key property
  */
-fun <T: Any> SchemaBuilder.getProperty(key: String) =
+fun <T : Any> SchemaBuilder.getProperty(key: String) =
     getKoin().getProperty<T>(key)
 
 /**

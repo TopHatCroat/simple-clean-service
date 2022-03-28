@@ -3,13 +3,13 @@ package com.github.tophatcroat.feature.todo.data
 import com.github.tophatcroat.feature.todo.data.dao.TodoEntity
 import com.github.tophatcroat.feature.todo.data.dao.TodoTable
 import com.github.tophatcroat.feature.todo.data.mapper.toDto
-import com.github.tophatcroat.feature.todo.domain.model.TodoDto
 import com.github.tophatcroat.feature.todo.domain.TodoCreateDto
 import com.github.tophatcroat.feature.todo.domain.TodoDataSource
-import java.util.UUID
+import com.github.tophatcroat.feature.todo.domain.model.TodoDto
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
+import java.util.UUID
 
 class TodoDataSourceImpl : TodoDataSource {
     override suspend fun create(data: TodoCreateDto): TodoDto {

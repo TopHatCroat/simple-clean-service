@@ -9,7 +9,6 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.locations.KtorExperimentalLocationsAPI
 import io.ktor.locations.locations
 import io.ktor.server.testing.handleRequest
-import java.util.UUID
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import org.jetbrains.exposed.sql.transactions.transaction
@@ -19,6 +18,7 @@ import strikt.api.expectThat
 import strikt.assertions.hasSize
 import strikt.assertions.isA
 import strikt.assertions.isEqualTo
+import java.util.UUID
 
 @OptIn(KtorExperimentalLocationsAPI::class)
 class TodoControllerTest : AutoCloseKoinTest() {

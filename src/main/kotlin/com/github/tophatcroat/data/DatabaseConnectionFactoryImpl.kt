@@ -30,5 +30,4 @@ class DatabaseConnectionFactoryImpl(appConfig: AppConfig) : DatabaseConnectionFa
         config.validate()
         return HikariDataSource(config)
     }
-
 }

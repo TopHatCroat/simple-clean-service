@@ -1,15 +1,17 @@
+@file:Suppress("MatchingDeclarationName")
 package com.github.tophatcroat
 
 import com.github.tophatcroat.config.AppConfig
 import com.github.tophatcroat.data.DatabaseConnectionFactory
 import com.github.tophatcroat.data.IntegrationTestDatabaseConnectionFactoryImpl
 import com.github.tophatcroat.feature.todo.data.TodoDataSourceImpl
+import com.github.tophatcroat.feature.todo.domain.TodoDataSource
 import com.github.tophatcroat.feature.todo.domain.TodoService
 import com.github.tophatcroat.feature.todo.domain.TodoServiceImpl
-import com.github.tophatcroat.feature.todo.domain.TodoDataSource
-import io.ktor.config.*
-import io.ktor.locations.*
-import io.ktor.server.testing.*
+import io.ktor.config.MapApplicationConfig
+import io.ktor.locations.KtorExperimentalLocationsAPI
+import io.ktor.server.testing.TestApplicationEngine
+import io.ktor.server.testing.withTestApplication
 import org.koin.core.annotation.KoinReflectAPI
 import org.koin.core.module.Module
 import org.koin.dsl.module

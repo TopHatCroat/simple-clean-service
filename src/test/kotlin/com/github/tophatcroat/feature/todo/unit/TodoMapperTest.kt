@@ -5,11 +5,11 @@ import com.github.tophatcroat.feature.todo.data.dao.TodoTable
 import com.github.tophatcroat.feature.todo.data.mapper.toDto
 import io.mockk.every
 import io.mockk.mockk
-import java.util.UUID
 import org.jetbrains.exposed.dao.id.EntityID
 import org.junit.jupiter.api.Test
 import strikt.api.expectThat
 import strikt.assertions.isEqualTo
+import java.util.UUID
 
 class TodoMapperTest {
 

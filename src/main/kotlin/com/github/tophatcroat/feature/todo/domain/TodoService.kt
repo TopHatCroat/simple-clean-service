@@ -10,4 +10,3 @@ interface TodoService {
 
     suspend fun getAll(): Iterable<TodoDto>
 }
-

@@ -5,12 +5,12 @@ import io.ktor.application.call
 import io.ktor.http.HttpStatusCode
 import io.ktor.locations.KtorExperimentalLocationsAPI
 import io.ktor.locations.Location
-import io.ktor.routing.Route
 import io.ktor.locations.get
 import io.ktor.locations.post
 import io.ktor.response.respond
-import java.util.UUID
+import io.ktor.routing.Route
 import org.koin.ktor.ext.inject
+import java.util.UUID
 
 @OptIn(KtorExperimentalLocationsAPI::class)
 @Location("/sample")
