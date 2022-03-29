@@ -14,8 +14,9 @@ import io.ktor.server.testing.TestApplicationEngine
 import io.ktor.server.testing.withTestApplication
 import org.koin.core.annotation.KoinReflectAPI
 import org.koin.core.module.Module
+import org.koin.core.module.dsl.singleOf
+import org.koin.dsl.bind
 import org.koin.dsl.module
-import org.koin.dsl.single
 import org.testcontainers.containers.PostgreSQLContainer
 
 object TestContainers {
@@ -38,13 +39,11 @@ fun MapApplicationConfig.createConfigForTesting() {
 
 @OptIn(KoinReflectAPI::class)
 val appTestModule = module {
-//    singleOf(::AppConfig)
-//    singleOf(::IntegrationTestDatabaseConnectionFactoryImpl) bind DatabaseConnectionFactory::class
-    single<AppConfig>()
-    single<DatabaseConnectionFactory> { IntegrationTestDatabaseConnectionFactoryImpl(get()) }
+    singleOf(::AppConfig)
+    singleOf(::IntegrationTestDatabaseConnectionFactoryImpl) bind DatabaseConnectionFactory::class
 
-    single<TodoDataSource> { TodoDataSourceImpl() }
-    single<TodoService> { TodoServiceImpl(get()) }
+    singleOf(::TodoDataSourceImpl) bind TodoDataSource::class
+    singleOf(::TodoServiceImpl) bind TodoService::class
 }
 
 @KtorExperimentalLocationsAPI

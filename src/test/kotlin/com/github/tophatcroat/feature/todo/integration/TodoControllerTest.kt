@@ -72,7 +72,7 @@ class TodoControllerTest : AutoCloseKoinTest() {
     }
 
     @Test
-    fun `create samples works`() = withTestServer {
+    fun `create todo works`() = withTestServer {
 
         val href = application.locations.href(
             TodoController.Create(text = "test")

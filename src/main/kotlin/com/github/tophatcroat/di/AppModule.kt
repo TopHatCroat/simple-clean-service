@@ -8,14 +8,15 @@ import com.github.tophatcroat.feature.todo.domain.TodoDataSource
 import com.github.tophatcroat.feature.todo.domain.TodoService
 import com.github.tophatcroat.feature.todo.domain.TodoServiceImpl
 import org.koin.core.annotation.KoinReflectAPI
+import org.koin.core.module.dsl.singleOf
+import org.koin.dsl.bind
 import org.koin.dsl.module
-import org.koin.dsl.single
 
 @OptIn(KoinReflectAPI::class)
 val appModule = module {
     // Backend Config
-    single<AppConfig>()
-    single<DatabaseConnectionFactory> { DatabaseConnectionFactoryImpl(get()) }
-    single<TodoDataSource> { TodoDataSourceImpl() }
-    single<TodoService> { TodoServiceImpl(get()) }
+    singleOf(::AppConfig)
+    singleOf(::DatabaseConnectionFactoryImpl) bind DatabaseConnectionFactory::class
+    singleOf(::TodoDataSourceImpl) bind TodoDataSource::class
+    singleOf(::TodoServiceImpl) bind TodoService::class
 }
