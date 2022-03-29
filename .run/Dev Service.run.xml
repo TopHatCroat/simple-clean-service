@@ -1,0 +1,11 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Dev Service" type="JetRunConfigurationType">
+    <option name="MAIN_CLASS_NAME" value="com.github.tophatcroat.ApplicationKt" />
+    <module name="com.github.tophatcroat.ktor-bootstrap.main" />
+    <option name="PROGRAM_PARAMETERS" value="-config=src/main/resources/application-dev.conf" />
+    <shortenClasspath name="NONE" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
