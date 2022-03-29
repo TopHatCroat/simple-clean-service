@@ -14,7 +14,7 @@ import java.util.UUID
 
 @OptIn(KtorExperimentalLocationsAPI::class)
 @Location("/sample")
-class TodoController {
+class TodoRoute {
 
     @Location("")
     class GetAll
@@ -31,18 +31,18 @@ fun Route.todoController() {
 
     val todoService by inject<TodoService>()
 
-    get<TodoController.GetAll> {
+    get<TodoRoute.GetAll> {
         val result = todoService.getAll()
 
         call.respond(result.map { it })
     }
 
-    get<TodoController.Get> { params ->
+    get<TodoRoute.Get> { params ->
         val result = todoService.getOne(params.id)
         call.respond(result)
     }
 
-    post<TodoController.Create> { params ->
+    post<TodoRoute.Create> { params ->
         val result = todoService.createNew(params.text)
 
         call.respond(HttpStatusCode.Created, result)

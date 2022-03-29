@@ -1,6 +1,6 @@
 package com.github.tophatcroat.feature.todo.integration
 
-import com.github.tophatcroat.feature.todo.controller.TodoController
+import com.github.tophatcroat.feature.todo.controller.TodoRoute
 import com.github.tophatcroat.feature.todo.data.dao.TodoEntity
 import com.github.tophatcroat.feature.todo.domain.model.TodoDto
 import com.github.tophatcroat.withTestServer
@@ -33,7 +33,7 @@ class TodoControllerTest : AutoCloseKoinTest() {
         }
 
         val href = application.locations.href(
-            TodoController.Get(id = expected.id.value)
+            TodoRoute.Get(id = expected.id.value)
         )
 
         handleRequest(HttpMethod.Get, href).apply {
@@ -59,7 +59,7 @@ class TodoControllerTest : AutoCloseKoinTest() {
         }
 
         val href = application.locations.href(
-            TodoController.GetAll()
+            TodoRoute.GetAll()
         )
 
         handleRequest(HttpMethod.Get, href).apply {
@@ -75,7 +75,7 @@ class TodoControllerTest : AutoCloseKoinTest() {
     fun `create todo works`() = withTestServer {
 
         val href = application.locations.href(
-            TodoController.Create(text = "test")
+            TodoRoute.Create(text = "test")
         )
 
         handleRequest(HttpMethod.Post, href).apply {

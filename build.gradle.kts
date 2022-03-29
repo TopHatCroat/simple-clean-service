@@ -18,7 +18,7 @@ plugins {
     kotlin("jvm") version "1.6.10"
     id("org.jetbrains.kotlin.plugin.serialization") version "1.6.10"
 
-    id("io.gitlab.arturbosch.detekt") version "1.19.0"
+    id("io.gitlab.arturbosch.detekt") version "1.20.0-RC1"
 }
 
 group = "com.github.tophatcroat"
@@ -79,6 +79,7 @@ dependencies {
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
     kotlinOptions.freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
+    kotlinOptions.jvmTarget = "17"
 }
 
 tasks.test {
@@ -90,8 +91,9 @@ detekt {
 }
 
 tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
-    jvmTarget = "1.8"
+    jvmTarget = "17"
 }
+
 tasks.withType<io.gitlab.arturbosch.detekt.DetektCreateBaselineTask>().configureEach {
-    jvmTarget = "1.8"
+    jvmTarget = "17"
 }
