@@ -4,8 +4,14 @@ services:
     image: postgres
     container_name: "postgres"
     environment:
-      - POSTGRES_USER=sample
-      - POSTGRES_PASSWORD=sample
-      - POSTGRES_DB=sample
+      - POSTGRES_USER=simple
+      - POSTGRES_PASSWORD=simple
+      - POSTGRES_DB=simple
     ports:
       - 5432:5432
+
+  service:
+    build:
+      context: .
+    ports:
+      - 8080:8080
