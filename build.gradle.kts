@@ -19,17 +19,12 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization") version "1.6.10"
 
     id("io.gitlab.arturbosch.detekt") version "1.20.0-RC1"
+
+    id("com.github.johnrengelman.shadow") version "7.1.2"
 }
 
 group = "com.github.tophatcroat"
 version = "0.0.1"
-
-application {
-    mainClass.set("io.ktor.server.netty.EngineMain")
-
-    val isDevelopment: Boolean = project.ext.has("development")
-    applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
-}
 
 repositories {
     mavenCentral()
@@ -77,15 +72,7 @@ dependencies {
     testImplementation("org.testcontainers:postgresql:$test_containers_version")
 }
 
-tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
-    kotlinOptions.freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
-    kotlinOptions.jvmTarget = "17"
-}
-
-tasks.test {
-    useJUnitPlatform()
-}
-
+// Prebuild config
 detekt {
     config = files("$projectDir/detekt.yml")
 }
@@ -96,4 +83,33 @@ tasks.withType<io.gitlab.arturbosch.detekt.Detekt>().configureEach {
 
 tasks.withType<io.gitlab.arturbosch.detekt.DetektCreateBaselineTask>().configureEach {
     jvmTarget = "17"
+}
+
+// Compilation config
+tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile>().configureEach {
+    kotlinOptions.freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
+    kotlinOptions.jvmTarget = "17"
+}
+
+// Test config
+tasks.test {
+    useJUnitPlatform()
+}
+
+// Run config
+application {
+    mainClass.set("io.ktor.server.netty.EngineMain")
+
+    val isDevelopment: Boolean = project.ext.has("development")
+    applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
+}
+
+// Artifact config
+tasks {
+    shadowJar {
+        manifest {
+            attributes(Pair("Main-Class", "com.github.tophatcroat.ApplicationKt"))
+            archiveFileName.set("app.jar")
+        }
+    }
 }
