@@ -26,6 +26,7 @@ class DatabaseConnectionFactoryImpl(appConfig: AppConfig) : DatabaseConnectionFa
         config.maximumPoolSize = dbConfig.maxPoolSize
         config.isAutoCommit = false
         config.transactionIsolation = "TRANSACTION_REPEATABLE_READ"
+        config.initializationFailTimeout = 10000
 
         config.validate()
         return HikariDataSource(config)
